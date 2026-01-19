@@ -1,0 +1,219 @@
+CONFIGMANAGER CHEAT SHEET
+=========================
+
+QUICK START
+-----------
+from configmanager import ConfigManager
+config = ConfigManager()
+
+GET PATHS
+---------
+# Standard paths
+synapse = config.get_path("synapse")
+memory_core = config.get_path("memory_core")
+task_queue = config.get_path("task_queue")
+session_logs = config.get_path("session_logs")
+
+# All available paths
+beacon_hq = config.get_path("beacon_hq")
+synapse = config.get_path("synapse")
+synapse_archive = config.get_path("synapse_archive")
+memory_core = config.get_path("memory_core")
+task_queue = config.get_path("task_queue")
+session_logs = config.get_path("session_logs")
+bookmarks = config.get_path("bookmarks")
+memory_bridge_db = config.get_path("memory_bridge_db")
+task_queue_db = config.get_path("task_queue_db")
+
+GET AGENT CONFIG
+----------------
+# Get agent profile
+agent = config.get_agent("ATLAS")
+print(f"Model: {agent.model}")
+print(f"Role: {agent.role}")
+print(f"Free: {agent.free}")
+print(f"Capabilities: {agent.capabilities}")
+
+# List all agents
+agents = config.list_agents()
+for agent in agents:
+    print(f"{agent.name}: {agent.model}")
+
+SETTINGS
+--------
+# Get setting
+value = config.get_setting("default_poll_interval")
+log_level = config.get_setting("log_level")
+
+# Set setting
+config.set_setting("log_level", "DEBUG")
+config.set_setting("timeout", 60)
+config.save()
+
+DOT NOTATION
+------------
+# Get nested values
+atlas_model = config.get("agents.ATLAS.model")
+synapse_path = config.get("paths.synapse")
+poll_interval = config.get("settings.default_poll_interval")
+
+# Set nested values
+config.set("agents.BOLT.model", "Grok-beta (Free)")
+config.set("settings.max_retries", 5)
+config.save()
+
+VALIDATION
+----------
+# Validate configuration
+valid, errors = config.validate()
+
+if valid:
+    print("✅ Configuration valid")
+else:
+    print("❌ Errors found:")
+    for error in errors:
+        print(f"  - {error}")
+
+SAVE CHANGES
+------------
+# Always save after making changes!
+config.set_setting("custom", "value")
+config.save()
+
+RESET TO DEFAULTS
+-----------------
+# Reset entire configuration
+config.reset_to_defaults()
+
+# Restores:
+# - Default paths
+# - Default agent profiles
+# - Default settings
+
+GET ALL CONFIG
+--------------
+# Get entire configuration
+all_config = config.get_all()
+
+# Export to file
+import json
+with open("config_backup.json", "w") as f:
+    json.dump(all_config, f, indent=2)
+
+COMMON PATTERNS
+---------------
+# Initialize with custom path
+from pathlib import Path
+config = ConfigManager(config_path=Path("/custom/config.json"))
+
+# Check if path exists and create if not
+synapse = config.get_path("synapse")
+if not synapse.exists():
+    synapse.mkdir(parents=True)
+
+# Validate before running tools
+valid, errors = config.validate()
+if not valid:
+    print("Fix configuration first!")
+    exit(1)
+
+# Get free agents only
+all_agents = config.list_agents()
+free_agents = [a for a in all_agents if a.free]
+
+# Tool-specific config
+from configmanager import ConfigManager
+
+class MyTool:
+    def __init__(self):
+        config = ConfigManager()
+        self.synapse_path = config.get_path("synapse")
+        self.poll_interval = config.get_setting("default_poll_interval")
+
+AGENT NAMES
+-----------
+Available agents:
+- ATLAS - Claude Sonnet 4.5 (Builder/Orchestrator)
+- FORGE - Claude Opus 4.5 (Planner/Reviewer)
+- BOLT - Grok-beta (Executor, FREE)
+- CLIO - Claude Sonnet 4.5 (Linux Specialist)
+- NEXUS - Claude Sonnet 4.5 (Testing Specialist)
+
+PATH KEYS
+---------
+Standard path keys:
+- "beacon_hq"
+- "memory_core"
+- "synapse"
+- "synapse_archive"
+- "task_queue"
+- "session_logs"
+- "bookmarks"
+- "memory_bridge_db"
+- "task_queue_db"
+
+SETTING KEYS
+------------
+Default settings:
+- "default_poll_interval" (300)
+- "log_level" ("INFO")
+- "max_retries" (3)
+- "timeout" (30)
+
+CONFIG FILE LOCATION
+--------------------
+Default: D:/BEACON_HQ/TEAM_BRAIN_CONFIG.json
+
+Custom location:
+config = ConfigManager(config_path=Path("/your/path/config.json"))
+
+VALIDATION CHECKS
+-----------------
+Validates:
+- All paths exist
+- Agent models specified
+- Required sections present
+- Valid path formats
+
+INTEGRATION
+-----------
+# With SynapseWatcher
+from configmanager import ConfigManager
+from synapsewatcher import SynapseWatcher
+
+config = ConfigManager()
+watcher = SynapseWatcher(
+    synapse_path=config.get_path("synapse"),
+    poll_interval=config.get_setting("default_poll_interval")
+)
+
+# With MemoryBridge
+from memorybridge import MemoryBridge
+
+config = ConfigManager()
+bridge = MemoryBridge(
+    agent_name="ATLAS",
+    db_path=config.get_path("memory_bridge_db")
+)
+
+TIPS
+----
+• Always call config.save() after making changes
+• Validate configuration before running tools
+• Use dot notation for nested access
+• Keep one config file for entire Team Brain
+• Paths use forward slashes or Path objects
+• Agent names are case-sensitive (ATLAS not atlas)
+
+TROUBLESHOOTING
+---------------
+• Config file not found? Creates default on first run
+• Path doesn't exist? Check validation output
+• Changes not saving? Did you call config.save()?
+• Can't access nested value? Check dot notation syntax
+
+LINKS
+-----
+Full docs: README.md
+Examples: EXAMPLES.md
+GitHub: https://github.com/DonkRonk17/ConfigManager
