@@ -15,7 +15,7 @@ from pathlib import Path
 from typing import Any, Dict, Optional, List
 from dataclasses import dataclass, asdict
 
-VERSION = "1.0.0"
+VERSION = "1.1.0"
 
 # Default config file location
 DEFAULT_CONFIG_FILE = Path("D:/BEACON_HQ/TEAM_BRAIN_CONFIG.json")

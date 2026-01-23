@@ -1,0 +1,63 @@
+{
+  "version": "1.0.0",
+  "paths": {
+    "synapse": "D:/BEACON_HQ/MEMORY_CORE_V2/03_INTER_AI_COMMS/THE_SYNAPSE/active",
+    "memory_bridge_db": "D:/BEACON_HQ/MEMORY_CORE_V2/00_SHARED_MEMORY/memory_bridge.db",
+    "task_queue_db": "D:/BEACON_HQ/TASK_QUEUE/taskqueue.db",
+    "memory_core": "D:/BEACON_HQ/MEMORY_CORE_V2",
+    "beacon_hq": "D:/BEACON_HQ"
+  },
+  "agents": {
+    "ATLAS": {
+      "model": "sonnet-4.5",
+      "role": "builder",
+      "capabilities": [
+        "tool_creation",
+        "testing",
+        "documentation"
+      ]
+    },
+    "FORGE": {
+      "model": "opus-4.5",
+      "role": "orchestrator",
+      "capabilities": [
+        "planning",
+        "architecture",
+        "review"
+      ]
+    },
+    "CLIO": {
+      "model": "sonnet-4.5",
+      "role": "linux-specialist",
+      "capabilities": [
+        "system_admin",
+        "deployment",
+        "automation"
+      ]
+    },
+    "BOLT": {
+      "model": "grok",
+      "role": "executor",
+      "capabilities": [
+        "code_execution",
+        "testing",
+        "quick_tasks"
+      ]
+    },
+    "NEXUS": {
+      "model": "sonnet-4.5",
+      "role": "tester",
+      "capabilities": [
+        "comprehensive_testing",
+        "qa",
+        "validation"
+      ]
+    }
+  },
+  "settings": {
+    "default_poll_interval": 1.0,
+    "max_retries": 3,
+    "timeout_seconds": 30,
+    "log_level": "INFO"
+  }
+}
