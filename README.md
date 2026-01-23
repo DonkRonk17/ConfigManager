@@ -1,3 +1,5 @@
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/0adcd2ed-4a4c-4037-9971-bc148ee7750b" />
+
 # ConfigManager v1.1.0
 
 **Centralized Configuration System for Team Brain**
@@ -552,6 +554,9 @@ pip install .
 ```
 
 ---
+
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/e31c26df-9737-49a5-86be-55102305b913" />
+
 
 ## 🤝 **Contributing**
 
